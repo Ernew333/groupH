@@ -1,0 +1,9 @@
+{% if form.errors %}
+    <p>Username or Password is incorrect. Try again.</p>
+{% endif %}
+
+<form action="{% url 'accounts:login' %}" method="POST">
+    {% csrf_token %}
+    {{ form.as_div }}
+    <button name="submit">Login</button>
+</form>
