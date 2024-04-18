@@ -1,6 +1,6 @@
 <div>
     {% if user.is_authenticated %}
-        <p>Hello, {{ user.username }}.</p>
+        <p>Hello, {{ user.first_name }}.</p>
         <form action="{% url 'accounts:logout' %}" method="POST">
             {% csrf_token %}
             <button name="submit">Log out</button>
