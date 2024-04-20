@@ -1,15 +1,7 @@
-<div>
-    {% if user.is_authenticated %}
-        <p>Hello, {{ user.first_name }}.</p>
-        <form action="{% url 'accounts:logout' %}" method="POST">
-            {% csrf_token %}
-            <button name="submit">Log out</button>
-        </form>
-        <hr />
-    {% else %}
-        <a href="{% url 'accounts:register' %}"> Register</a> -
-        <a href="{% url 'accounts:login' %}">Log in</a>
-    {% endif %}
-</div>
+{% extends 'inventories/base.html' %}
 
-<h1>Home Page</h1>
+{% block breadcrumbs %}
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item active">Home</li>
+    </ol>
+{% endblock breadcrumbs %}

@@ -40,7 +40,10 @@ INSTALLED_APPS = [
 
     # Added Apps
     'accounts',    
-    'inventories'
+    'inventories',
+
+    # Third Party Apps
+    'django_bootstrap5'
 ]
 
 MIDDLEWARE = [
