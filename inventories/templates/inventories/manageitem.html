@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Manage Equipment</title>
+    {% extends 'inventories/base.html' %}
 
     {% load static %}
 
@@ -14,7 +15,54 @@
 <body>
     {% block content %}
     <h1>Manage Equipment</h1>
-    
-    {% end blockcontent %}
+    <table>
+        <tr>
+            <th>
+                Equipment name
+            </th>
+            <th>
+                Equipment type
+            </th>
+            <th>
+                Location
+            </th>
+            <th>
+                Quantity
+            </th>
+            <th>
+                Lending period
+            </th>
+            <th>
+                <a href="{% url 'inventories:createitem' %}">Create item</a>
+            </th>
+        </tr>
+        <tr>
+            {%  for item in item %}
+            <td>
+                {{item.name}}
+            </td>
+            <td>
+                {{item.type}}
+            </td>
+            <td>
+                {{item.location}}
+            </td>
+            <td>
+                {{item.quantity}}
+            </td>
+            <td>
+                <p>time</p>
+            </td>
+            <td>
+                <a href="{% url 'inventories:updateitem' item.id %}">Edit item</a>
+            </td>
+            <td>
+                <a href="{% url 'inventories:deleteitem' item.id %}">Delete item</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    {% endblock content %}
 </body>
 </html>

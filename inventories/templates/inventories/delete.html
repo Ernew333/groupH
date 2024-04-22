@@ -1,0 +1,25 @@
+{% extends 'inventories/base.html' %}
+{% load static %}
+
+{% load django_bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+
+{% block content %}
+
+<div>
+    <form method="POST" action="">
+        {% csrf_token %}
+        <p>Delete <b>{{item.name}} ?</b></p>
+        <input type="submit" value="Confirm"/>
+    </form>
+    <div>
+        <small>
+            <a href="{% url 'inventories:manageitem' %}">Cancel</a>
+        </small>
+    </div>
+</div>
+
+{% endblock content %}
+
+ 

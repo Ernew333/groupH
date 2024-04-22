@@ -21,7 +21,7 @@ def createItem(request):
         form = ItemForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('manageitem')
+            return redirect('inventories:manageitem')
     context = {'form': form}
     return render(request, 'inventories/item_form.html', context)
 
@@ -33,7 +33,15 @@ def updateItem(request,id):
         form = ItemForm(request.POST, instance=item)
         if form.is_valid():
             form.save()
-            return redirect('manageitem')
+            return redirect('inventories:manageitem')
 
     context = {'form': form}
     return render(request, 'inventories/item_form.html', context)
+
+def deleteItem(request, id):
+    item = Item.objects.get(id=id)
+    context = {'item': item}
+    if request.method == 'POST':
+        item.delete()
+        return redirect('inventories:manageitem')
+    return render(request, 'inventories/delete.html', {'item': item })
