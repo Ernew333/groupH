@@ -8,4 +8,5 @@ app_name = 'inventories'
 urlpatterns = [
     path('', views.index, name="index"),
     path('booking/', views.viewBooking, name = "viewbooking"),
+    path('cancel_booking/<str:id>/', views.cancelBooking, name = "cancelbooking"),
 ]

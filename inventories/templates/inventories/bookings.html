@@ -39,7 +39,7 @@
     </tr>
     {% for booking in booking %}
     <tr>
-        <td>{% if booking.status == "Active"%} Cancel {% endif %}</td>
+        <td>{% if booking.status == "Active"%}<a href = "{% url 'inventories:cancelbooking' id=booking.id %}">Cancel</a>{% endif %}</td>
         <td>{{booking.item}}</td>
         <td>{{booking.status}}</td>
         <td>{{booking.user}}</td>

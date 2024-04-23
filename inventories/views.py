@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render , redirect
 from django.contrib.auth.decorators import login_required
 from .models import Item , Booking
 from datetime import date
@@ -16,3 +16,10 @@ def viewBooking(request):
         cb.save()
     booking = Booking.objects.all()
     return render(request, 'inventories/bookings.html',{'booking': booking })
+
+def cancelBooking(request,id):
+    cancel_booking = Booking.objects.get(id=id)
+    cancel_booking.status = "Cancelled"
+    cancel_booking.save()
+    return redirect('inventories:viewbooking')
+    
