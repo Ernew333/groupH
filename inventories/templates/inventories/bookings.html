@@ -37,6 +37,18 @@
             Due Date
         </th>
     </tr>
+    {% for booking in booking %}
+    <tr>
+        <td>{% if booking.status == "Active"%} Cancel {% endif %}</td>
+        <td>{{booking.item}}</td>
+        <td>{{booking.status}}</td>
+        <td>{{booking.user}}</td>
+        <td>{{booking.start_date}}</td>
+        <td>{{booking.end_date}}</td>
+    </tr>
+    {% endfor %}
+    </table>
+
 
     </table>
     {% endblock content %}
