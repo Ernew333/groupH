@@ -6,11 +6,12 @@ from .models import Item
 @login_required
 def index(request):
     items = Item.objects.all()
+    totalItems = items.count()
 
     types = getTypes(items)
     statuses = getStatuses(items)
 
-    context = {'items': items, 'types': types, 'statuses': statuses}
+    context = {'items': items, 'types': types, 'statuses': statuses, 'totalItems': totalItems}
     return render(request, 'inventories/index.html', context)
 
 def getTypes(items):

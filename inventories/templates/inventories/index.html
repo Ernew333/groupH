@@ -20,9 +20,22 @@
         <br><br>
     </form>
 
+    <p>{{ totalItems }} items</p>
+
+    {% for item in items %}
+        <img src={{item.image}}><br>
+        {{ item.name }}<br>
+        {{ item.comments }}<br>
+        <button>Add to Basket</button><br><br>
+
+    {% endfor %}
+
+    <!--Pagination-->
+
     <h3>Filter by</h3><hr>
 
     <div>
+        <!-- Make dropdowns to show checkboxes -->
         <p>Type of Equipment</p>
         <form action="{% url 'inventories:index' %}" method="POST">
             {% for type, count in types.items %}
