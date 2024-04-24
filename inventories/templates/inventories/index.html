@@ -5,3 +5,29 @@
         <li class="breadcrumb-item active">Home</li>
     </ol>
 {% endblock breadcrumbs %}
+
+{% block content %}
+    <h1>Items</h1>
+    
+
+    <h3>Filter by</h3><hr>
+
+    <div>
+        <p>Type of Equipment</p>
+        <form action="{% url 'inventories:index' %}" method="POST">
+            {% for type, count in types.items %}
+                <input type="checkbox" id="" name="" value="">
+                <label for="">{{ type }}</label><span>({{ count }})</span><br>
+            {% endfor %}
+        </form>
+
+        <br><p>Status</p>
+        <form action="{% url 'inventories:index' %}" method="POST">
+            {% for status, count in statuses.items %}
+                <input type="checkbox" id="" name="" value="">
+                <label for="">{{ status }}</label><span>({{ count }})<span><br>
+            {% endfor %}
+        </form>
+    </div>    
+
+{% endblock content %}
