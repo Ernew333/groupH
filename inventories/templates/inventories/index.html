@@ -8,7 +8,17 @@
 
 {% block content %}
     <h1>Items</h1>
-    
+
+    <form action="{% url 'inventories:index' %}" method="POST">
+        <span>Sort by</span>
+        <select name="sort" id="sort">
+            <option value="name">Name</option>
+            <option value="durationLow">Booking Duration: Low-High</option>
+            <option value="durationHigh">Booking Duration: High-Low</option>
+            <option value="new">New In</option>
+        </select>
+        <br><br>
+    </form>
 
     <h3>Filter by</h3><hr>
 
