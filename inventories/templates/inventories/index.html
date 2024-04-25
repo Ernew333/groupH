@@ -20,9 +20,9 @@
         <br><br>
     </form>
 
-    <p>{{ totalItems }} items</p>
+    <p>{{ totalItems }} items</p><br>
 
-    {% for item in items %}
+    {% for item in page %}
         <img src={{item.image}}><br>
         {{ item.name }}<br>
         {{ item.comments }}<br>
@@ -30,7 +30,17 @@
 
     {% endfor %}
 
-    <!--Pagination-->
+    {% if page.has_previous %}
+        <a href="?page=1">&laquo First</a>
+        <a href="?page={{ page.previous_page_number }}">Previous</a>
+    {% endif %}
+
+    Page {{ page.number }} of {{ page.num_pages }}
+
+    {% if page.has_next %}
+        <a href="?page={{ page.next_page_number }}">Next</a>
+        <a href="?page={{ page.paginator.num_pages }}">Last &raquo</a>
+    {% endif %}
 
     <h3>Filter by</h3><hr>
 

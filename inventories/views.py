@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from .models import Item
+from django.core.paginator import Paginator
 
 # Create your views here.
 @login_required
@@ -11,7 +12,9 @@ def index(request):
     types = getTypes(items)
     statuses = getStatuses(items)
 
-    context = {'items': items, 'types': types, 'statuses': statuses, 'totalItems': totalItems}
+    page = getPageItems(request, items)
+
+    context = {'page': page, 'types': types, 'statuses': statuses, 'totalItems': totalItems}
     return render(request, 'inventories/index.html', context)
 
 def getTypes(items):
@@ -35,3 +38,10 @@ def countType(items, selectedType):
 
 def countStatus(items, selectedStatus):
     return items.filter(status=selectedStatus).count()
+
+def getPageItems(request, items):
+    paginator = Paginator(items, 1)
+    requestedPageNumber = request.GET.get('page')
+    itemsInPage = paginator.get_page(requestedPageNumber)
+
+    return itemsInPage
