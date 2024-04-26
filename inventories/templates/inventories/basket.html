@@ -1,0 +1,59 @@
+{% extends "inventories/base.html" %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Basket Page</title>
+<style>
+    body { font-family: Arial, sans-serif; margin: 40px; }
+    table { width: 100%; border-collapse: collapse; }
+    th, td { text-align: left; padding: 8px; border-bottom: 1px solid #ddd; }
+    th { background-color: #f2f2f2; }
+    .remove-btn { background-color: #f44336; color: white; border: none; padding: 5px 10px; cursor: pointer; }
+</style>
+</head>
+<body>
+<h2>Your Basket</h2>
+<table>
+    <thead>
+        <tr>
+            <th>Item</th>
+            <th>Quantity</th>
+            <th>start date </th>
+            <th>end date</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for booking in bookings %}
+        <tr>
+            
+            <td>
+                <img src="{{ booking.item.image.url }}" alt="Image of {{ booking.item.name }}" style= 'max-width: 40px'>
+                {{ booking.item.name }} -- {{ booking.item.id }}
+            </td>
+            <td>{{ booking.item.quantity }}</td>
+            <td>{{ booking.start_date }}</td>
+            <td>{{ booking.end_date }}</td>
+            <td>
+                
+                <form method="post" action="{% url 'inventories:basket' %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="delete" value="{{ booking.id }}">
+                    <button type="submit" class="remove-btn">Remove</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+    
+</table>
+
+
+    
+    
+</body>
+</html>
+{% endblock content %}
+

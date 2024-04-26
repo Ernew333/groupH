@@ -3,7 +3,7 @@ from django.contrib.auth import get_user_model as user_model
 
 User = user_model()
 
-# Create your models here.
+
 class Item(models.Model):
     name = models.CharField(max_length=50)
     type = models.CharField(max_length=50)
@@ -14,7 +14,7 @@ class Item(models.Model):
     quantity = models.IntegerField()
     audit = models.DateField(null=True, blank=False)
     location = models.CharField(max_length=50)
-
+    image = models.ImageField(upload_to= 'inventories/media/images')
     class ItemStatus(models.TextChoices):
         AVAILABLE = "Available"
         DECOMMISIONED = "Decommisioned"                
@@ -28,6 +28,7 @@ class Item(models.Model):
         return self.name
 
 class Booking(models.Model):
+    id = models.AutoField(primary_key=True)
     item = models.ForeignKey(Item, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     start_date = models.DateTimeField(auto_now=False, auto_now_add=False)
