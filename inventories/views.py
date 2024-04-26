@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-from .models import Item 
+from .models import Item
 from .forms import ItemForm
 
 
@@ -9,7 +9,7 @@ from .forms import ItemForm
 def index(request):
     return render(request, 'inventories/index.html')
 
-def manageitem(request):
+def manageItem(request):
     item = Item.objects.all()
     context = {'item': item}
     return render(request,'inventories/manageitem.html', context)

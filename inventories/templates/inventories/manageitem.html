@@ -30,10 +30,9 @@
                 Quantity
             </th>
             <th>
-                Lending period
+                <a href="{% url 'inventories:createitem' %}">Create item</a>
             </th>
             <th>
-                <a href="{% url 'inventories:createitem' %}">Create item</a>
             </th>
         </tr>
         <tr>
@@ -49,9 +48,6 @@
             </td>
             <td>
                 {{item.quantity}}
-            </td>
-            <td>
-                <p>time</p>
             </td>
             <td>
                 <a href="{% url 'inventories:updateitem' item.id %}">Edit item</a>
