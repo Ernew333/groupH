@@ -6,8 +6,8 @@
     <form action="{% url 'accounts:edit_account' %}" method="POST">
         {% csrf_token %}
         <div class="mb-3">
-            <label for="first_name" class="form-label">First Name</label>
-            <input type="text" class="form-control" id="first_name" name="first_name">
+            <label for="firstName" class="form-label">First Name</label>
+            <input type="text" class="form-control" id="firstName" name="firstName">
         </div>
         <div class="mb-3">
             <label for="surname" class="form-label">Surname</label>
@@ -18,16 +18,16 @@
             <input type="email" class="form-control" id="email" name="email">
         </div>
         <div class="mb-3">
-            <label for="phone_number" class="form-label">Your Phone Number</label>
-            <input type="tel" class="form-control" id="phone_number" name="phone_number">
+            <label for="phoneNumber" class="form-label">Your Phone Number</label>
+            <input type="tel" class="form-control" id="phoneNumber" name="phoneNumber">
         </div>
         <div class="mb-3">
             <label for="password" class="form-label">Password</label>
             <input type="password" class="form-control" id="password" name="password">
         </div>
         <div class="mb-3">
-            <label for="re_password" class="form-label">Re-enter Password</label>
-            <input type="password" class="form-control" id="re_password" name="re_password">
+            <label for="rePassword" class="form-label">Re-enter Password</label>
+            <input type="password" class="form-control" id="rePassword" name="rePassword">
         </div>
         <button type="submit" class="btn btn-primary">Save</button>
     </form>
