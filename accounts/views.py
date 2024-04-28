@@ -17,7 +17,7 @@ def register(request):
 
     context = {'form': form}
     return render(request, 'registration/register.html', context)
-
+@login_required
 def edit_account_view(request):
     if request.method != 'POST':
         form = UserChangeForm(instance=request.user)
