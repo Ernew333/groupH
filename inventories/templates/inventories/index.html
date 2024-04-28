@@ -1,4 +1,5 @@
 {% extends 'inventories/base.html' %}
+{% load custom_tags %}
 
 {% block breadcrumbs %}
     <ol class="breadcrumb">
@@ -26,39 +27,38 @@
         <img src={{item.image}}><br>
         {{ item.name }}<br>
         {{ item.comments }}<br>
-        <button>Add to Basket</button><br><br>
-
+        <button>Add to Basket</button>
+        <br><br>
     {% endfor %}
 
     {% if page.has_previous %}
-        <a href="?page=1">&laquo First</a>
-        <a href="?page={{ page.previous_page_number }}">Previous</a>
+        <a href="{% tag 1 'page' request.GET.urlencode %}">&laquo First</a>
+        <a href="{% tag page.previous_page_number 'page' request.GET.urlencode %}">Previous</a>
     {% endif %}
 
-    Page {{ page.number }} of {{ page.num_pages }}
+    Page {{ page.number }} of {{ page.paginator.num_pages }}
 
     {% if page.has_next %}
-        <a href="?page={{ page.next_page_number }}">Next</a>
-        <a href="?page={{ page.paginator.num_pages }}">Last &raquo</a>
+        <a href="{% tag page.next_page_number 'page' request.GET.urlencode %}">Next</a>
+        <a href="{% tag page.paginator.num_pages 'page' request.GET.urlencode %}">Last &raquo</a>
     {% endif %}
 
     <h3>Filter by</h3><hr>
 
     <div>
         <!-- Make dropdowns to show checkboxes -->
-        <p>Type of Equipment</p>
-        <form action="{% url 'inventories:index' %}" method="POST">
+        <form action="{% url 'inventories:index' %}" method="GET">
+            <p>Type of Equipment</p>            
             {% for type, count in types.items %}
-                <input type="checkbox" id="" name="" value="">
-                <label for="">{{ type }}</label><span>({{ count }})</span><br>
+                <input type="checkbox" id="{{ type }}" name="typeOption" value="{{ type }}" {% if type in selectedTypeFilters %} checked {% endif %} onchange="this.form.submit()">
+                <label for="{{ type }}">{{ type }}</label><span>({{ count }})</span><br>
             {% endfor %}
-        </form>
+            <br>
 
-        <br><p>Status</p>
-        <form action="{% url 'inventories:index' %}" method="POST">
+            <p>Status</p>
             {% for status, count in statuses.items %}
-                <input type="checkbox" id="" name="" value="">
-                <label for="">{{ status }}</label><span>({{ count }})<span><br>
+                <input type="checkbox" id="{{ status }}" name="statusOption" value="{{ status }}" {% if status in selectedStatusFilters %} checked {% endif %} onchange="this.form.submit()">
+                <label for="{{ status }}">{{ status }}</label><span>({{ count }})<span><br>
             {% endfor %}
         </form>
     </div>    

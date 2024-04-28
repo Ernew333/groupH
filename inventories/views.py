@@ -1,20 +1,43 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from .models import Item
+from django.db.models import Q
 from django.core.paginator import Paginator
 
 # Create your views here.
 @login_required
 def index(request):
-    items = Item.objects.all()
-    totalItems = items.count()
+    items = Item.objects.all().order_by('name')
 
     types = getTypes(items)
     statuses = getStatuses(items)
+    
+    filters = getSelectedFilters(request)
 
-    page = getPageItems(request, items)
+    if not isFiltersEmpty(filters):
+        items = applyFilter(items, filters)
+        
+        itemsFilteredBySelectedType = Item.objects.filter(type__in=filters.get('type'))
+        itemsFilteredBySelectedStatus = Item.objects.filter(status__in=filters.get('status'))
 
-    context = {'page': page, 'types': types, 'statuses': statuses, 'totalItems': totalItems}
+        if itemsFilteredBySelectedStatus:
+            types = getTypes(itemsFilteredBySelectedStatus)
+
+        if itemsFilteredBySelectedType:
+            statuses = getStatuses(itemsFilteredBySelectedType)
+
+    totalItems = items.count()
+    page = getPage(request, items)
+
+    context = {
+        'types': types,
+        'statuses': statuses,
+        'selectedTypeFilters': filters.get('type'),
+        'selectedStatusFilters': filters.get('status'),
+        'totalItems': totalItems,
+        'page': page
+    }
+
     return render(request, 'inventories/index.html', context)
 
 def getTypes(items):
@@ -39,9 +62,35 @@ def countType(items, selectedType):
 def countStatus(items, selectedStatus):
     return items.filter(status=selectedStatus).count()
 
-def getPageItems(request, items):
+def applyFilter(items, filters):
+    typeFilters = filters.get('type')
+    statusFilters = filters.get('status')
+    filteredItems = items
+
+    if  typeFilters:
+        filteredItems = filteredItems.filter(type__in=typeFilters)
+
+    if statusFilters:
+        filteredItems = filteredItems.filter(status__in=statusFilters)
+
+    return filteredItems
+
+def isFiltersEmpty(filters):
+    for filterList in filters.values():
+        if filterList:
+            return False
+
+    return True
+
+def getSelectedFilters(request):   
+    filters = {}
+
+    filters['type'] = request.GET.getlist('typeOption')
+    filters['status'] = request.GET.getlist('statusOption')
+
+    return filters
+
+def getPage(request, items):
     paginator = Paginator(items, 1)
     requestedPageNumber = request.GET.get('page')
-    itemsInPage = paginator.get_page(requestedPageNumber)
-
-    return itemsInPage
+    return paginator.get_page(requestedPageNumber)
