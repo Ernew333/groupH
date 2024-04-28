@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login
 from .forms import UserRegistrationForm
 from django.contrib.auth.forms import UserChangeForm
+from django.contrib import messages
 
 # Create your views here.
 def register(request):
