@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login
 from .forms import UserRegistrationForm
 from django.contrib.auth.forms import UserChangeForm
@@ -17,6 +18,7 @@ def register(request):
 
     context = {'form': form}
     return render(request, 'registration/register.html', context)
+
 @login_required
 def edit_account_view(request):
     if request.method != 'POST':
