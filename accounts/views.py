@@ -1,9 +1,12 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.generic.edit import UpdateView
 from django.shortcuts import render, redirect
-from django.contrib.auth.decorators import login_required
-from django.contrib.auth import login
+from django.contrib.auth import login, update_session_auth_hash
+from django.contrib.auth.forms import UserChangeForm, PasswordChangeForm
 from .forms import UserRegistrationForm
-from django.contrib.auth.forms import UserChangeForm
 from django.contrib import messages
+from django.urls import reverse_lazy
+from django.contrib.auth.views import PasswordChangeView
 
 # Create your views here.
 def register(request):
@@ -20,15 +23,12 @@ def register(request):
     context = {'form': form}
     return render(request, 'registration/register.html', context)
 
-@login_required
-def edit_account_view(request):
-    if request.method != 'POST':
-        form = UserChangeForm(instance=request.user)
-    else:
-        form = UserChangeForm(request.POST, instance=request.user)
-        if form.is_valid():
-            form.save()
-            return redirect('accounts:edit_account')  # Redirect to a success page or home page
+class EditAccountView(LoginRequiredMixin, UpdateView):
+    template_name = 'account_editing/edit_account.html'
+    form_class = UserRegistrationForm
+    success_url = reverse_lazy('accounts:edit_account')
 
-    context = {'form': form}
-    return render(request, 'account_editing/edit_account.html', context)
+    def get_object(self, queryset=None):
+        return self.request.user
+    
+    
