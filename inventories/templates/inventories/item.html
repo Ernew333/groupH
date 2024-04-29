@@ -2,7 +2,6 @@
 
 {% block content %}
     <style>
-        /* CSS styles specific to the item.html template */
         .item-details {
             display: flex;
             flex-direction: column;
@@ -11,14 +10,14 @@
 
         .item-header {
             display: flex;
-            justify-content: space-between; /* Align item name and quantity items to opposite ends */
+            justify-content: space-between; 
             align-items: center;
             width: 100%;
-            margin-bottom: 20px; /* Add some space between header and image */
+            margin-bottom: 20px; 
         }
         
         .item-header h2 {
-            margin-left: 330px; /* Adjust the right margin to separate item name from other elements */
+            margin-left: 330px; 
         }
 
         .item-actions {
@@ -28,7 +27,7 @@
         }
 
         .item-actions label {
-            margin-right: 3px; /* Add space to the right of the label */
+            margin-right: 3px; 
         }
 
         .item-actions button {
@@ -36,16 +35,14 @@
         }
 
         .item-comments p {
-            font-family: 'Roboto', sans-serif; /* Change font family */
-            color: #808080; /* Change color to grey */
-            font-weight: 550; /* Remove boldness */
+            font-family: 'Roboto', sans-serif; 
+            color: #808080; 
+            font-weight: 550; 
         }
-
-        /* Style for the separator line */
         .separator {
-            border-top: 1px solid #ccc; /* Add a solid 1px border at the top */
+            border-top: 1px solid #ccc; 
             width: 100%;
-            margin-bottom: 10px; /* Add space below the separator */
+            margin-bottom: 10px; 
         }
     </style>
 
@@ -53,12 +50,12 @@
         <div class="item-header">
             <h2>{{ item.name }}</h2>
             <div class="item-actions">
-                <label for="quantity">Quantity:</label> <!-- Added for attribute for accessibility -->
+                <label for="quantity">Quantity:</label> 
                 <input type="number" id="quantity" name="quantity" min="1" max="{{ item.quantity }}" value="1">
                 <button>Book Now</button>
             </div>
         </div>
-        <div class="separator"></div> <!-- Separator line -->
+        <div class="separator"></div> 
         <div class="item-image">
             <img src="{{ item.image.url }}">
         </div>
