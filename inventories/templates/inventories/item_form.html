@@ -10,6 +10,9 @@
         {% csrf_token %}<!--Token is always needewith POST for security -->
         {{form.as_p}}<!--Displays the form which uses .as_p allowing to use a structure which flows down-->
         <input type="submit" value="Submit"/><!--Submit button-->
+        <small>
+            <a href="{% url 'inventories:manageitem' %}">Cancel</a><!--Link to return back to the main page when they press cancel-->
+        </small>
     </form>
 </div>
 
