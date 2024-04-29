@@ -1,0 +1,69 @@
+{% extends 'inventories/base.html' %}
+
+{% block content %}
+    <style>
+        /* CSS styles specific to the item.html template */
+        .item-details {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .item-header {
+            display: flex;
+            justify-content: space-between; /* Align item name and quantity items to opposite ends */
+            align-items: center;
+            width: 100%;
+            margin-bottom: 20px; /* Add some space between header and image */
+        }
+        
+        .item-header h2 {
+            margin-left: 330px; /* Adjust the right margin to separate item name from other elements */
+        }
+
+        .item-actions {
+            display: flex;
+            align-items: center;
+            margin-right: 460px;
+        }
+
+        .item-actions label {
+            margin-right: 3px; /* Add space to the right of the label */
+        }
+
+        .item-actions button {
+            margin-left: 10px;
+        }
+
+        .item-comments p {
+            font-family: 'Roboto', sans-serif; /* Change font family */
+            color: #808080; /* Change color to grey */
+            font-weight: 550; /* Remove boldness */
+        }
+
+        /* Style for the separator line */
+        .separator {
+            border-top: 1px solid #ccc; /* Add a solid 1px border at the top */
+            width: 100%;
+            margin-bottom: 10px; /* Add space below the separator */
+        }
+    </style>
+
+    <div class="item-details">
+        <div class="item-header">
+            <h2>{{ item.name }}</h2>
+            <div class="item-actions">
+                <label for="quantity">Quantity:</label> <!-- Added for attribute for accessibility -->
+                <input type="number" id="quantity" name="quantity" min="1" max="{{ item.quantity }}" value="1">
+                <button>Book Now</button>
+            </div>
+        </div>
+        <div class="separator"></div> <!-- Separator line -->
+        <div class="item-image">
+            <img src="{{ item.image.url }}">
+        </div>
+        <div class="item-comments">
+            <p>{{ item.comments }}</p>
+        </div>
+    </div>
+{% endblock content %}
