@@ -27,6 +27,11 @@ def index(request):
             statuses = getStatuses(itemsFilteredBySelectedType)
 
     totalItems = items.count()
+    
+    sort = getSort(request)
+    if not isSortEmpty(sort):
+        items = sortItemsBy(items, sort)
+        
     page = getPage(request, items)
 
     context = {
@@ -35,7 +40,8 @@ def index(request):
         'selectedTypeFilters': filters.get('type'),
         'selectedStatusFilters': filters.get('status'),
         'totalItems': totalItems,
-        'page': page
+        'sort': sort,
+        'page': page,
     }
 
     return render(request, 'inventories/index.html', context)
@@ -62,6 +68,21 @@ def countType(items, selectedType):
 def countStatus(items, selectedStatus):
     return items.filter(status=selectedStatus).count()
 
+def getSelectedFilters(request):   
+    filters = {}
+
+    filters['type'] = request.GET.getlist('typeOption')
+    filters['status'] = request.GET.getlist('statusOption')
+
+    return filters
+
+def isFiltersEmpty(filters):
+    for filterList in filters.values():
+        if filterList:
+            return False
+
+    return True
+
 def applyFilter(items, filters):
     typeFilters = filters.get('type')
     statusFilters = filters.get('status')
@@ -75,20 +96,21 @@ def applyFilter(items, filters):
 
     return filteredItems
 
-def isFiltersEmpty(filters):
-    for filterList in filters.values():
-        if filterList:
-            return False
+def getSort(request):
+    return request.GET.get('sort')
 
-    return True
+def isSortEmpty(sort):
+    return sort == None
 
-def getSelectedFilters(request):   
-    filters = {}
+def sortItemsBy(items, sort):
+    if sort == 'name':
+        items = items.order_by('name')
+    elif sort == 'auditOldest':
+        items = items.order_by('audit')
+    elif sort == 'auditNewest':
+        items = items.order_by('-audit')
 
-    filters['type'] = request.GET.getlist('typeOption')
-    filters['status'] = request.GET.getlist('statusOption')
-
-    return filters
+    return items
 
 def getPage(request, items):
     paginator = Paginator(items, 1)

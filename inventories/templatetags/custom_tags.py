@@ -3,13 +3,13 @@ from django import template
 register = template.Library()
 
 @register.simple_tag
-def tag(value, fieldName, urlencode=None):
-    url = '?{}={}'.format(fieldName, value)
+def customURL(fieldName, value, urlencode=None):
+    urlQuery = '?{}={}'.format(fieldName, value)
 
     if urlencode:
-        querystring = urlencode.split('&')
-        filteredQueryString = filter(lambda parameter : parameter.split('=')[0]!=fieldName, querystring)
+        queryString = urlencode.split('&')
+        filteredQueryString = filter(lambda parameter : parameter.split('=')[0]!=fieldName, queryString)
         encodedQueryString = '&'.join(filteredQueryString)
-        url = '{}&{}'.format(url, encodedQueryString)
+        urlQuery = '{}&{}'.format(urlQuery, encodedQueryString)
 
-    return url
+    return urlQuery

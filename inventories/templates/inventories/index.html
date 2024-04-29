@@ -10,44 +10,18 @@
 {% block content %}
     <h1>Items</h1>
 
-    <form action="{% url 'inventories:index' %}" method="POST">
-        <span>Sort by</span>
-        <select name="sort" id="sort">
-            <option value="name">Name</option>
-            <option value="durationLow">Booking Duration: Low-High</option>
-            <option value="durationHigh">Booking Duration: High-Low</option>
-            <option value="new">New In</option>
-        </select>
-        <br><br>
-    </form>
-
-    <p>{{ totalItems }} items</p><br>
-
-    {% for item in page %}
-        <img src={{item.image}}><br>
-        {{ item.name }}<br>
-        {{ item.comments }}<br>
-        <button>Add to Basket</button>
-        <br><br>
-    {% endfor %}
-
-    {% if page.has_previous %}
-        <a href="{% tag 1 'page' request.GET.urlencode %}">&laquo First</a>
-        <a href="{% tag page.previous_page_number 'page' request.GET.urlencode %}">Previous</a>
-    {% endif %}
-
-    Page {{ page.number }} of {{ page.paginator.num_pages }}
-
-    {% if page.has_next %}
-        <a href="{% tag page.next_page_number 'page' request.GET.urlencode %}">Next</a>
-        <a href="{% tag page.paginator.num_pages 'page' request.GET.urlencode %}">Last &raquo</a>
-    {% endif %}
-
-    <h3>Filter by</h3><hr>
-
     <div>
-        <!-- Make dropdowns to show checkboxes -->
         <form action="{% url 'inventories:index' %}" method="GET">
+            <label for="sort">Sort by</label>
+            <select name="sort" id="sort" onchange="this.form.submit()">
+                <option value="name" {% if sort == 'name' %} selected {% endif %}>Name</option>
+                <option value="auditOldest" {% if sort == 'auditOldest' %} selected {% endif %}>Date Inspected (oldest)</option>
+                <option value="auditNewest" {% if sort == 'auditNewest' %} selected {% endif %}>Date Inspected (newest)</option>
+            </select>
+            <br><br>
+
+            
+            <h3>Filter by</h3><hr>
             <p>Type of Equipment</p>            
             {% for type, count in types.items %}
                 <input type="checkbox" id="{{ type }}" name="typeOption" value="{{ type }}" {% if type in selectedTypeFilters %} checked {% endif %} onchange="this.form.submit()">
@@ -60,7 +34,29 @@
                 <input type="checkbox" id="{{ status }}" name="statusOption" value="{{ status }}" {% if status in selectedStatusFilters %} checked {% endif %} onchange="this.form.submit()">
                 <label for="{{ status }}">{{ status }}</label><span>({{ count }})<span><br>
             {% endfor %}
+            <br>
         </form>
-    </div>    
+    </div>
 
+    <p>{{ totalItems }} items</p><br>
+
+    {% for item in page %}
+        <img src={{item.image}}><br>
+        {{ item.name }}<br>
+        {{ item.comments }}<br>
+        <button>Add to Basket</button>
+        <br><br>
+    {% endfor %}
+
+    {% if page.has_previous %}
+        <a href="{% customURL 'page' 1 request.GET.urlencode %}">&laquo First</a>
+        <a href="{% customURL 'page' page.previous_page_number request.GET.urlencode %}">Previous</a>
+    {% endif %}
+
+    Page {{ page.number }} of {{ page.paginator.num_pages }}
+
+    {% if page.has_next %}
+        <a href="{% customURL 'page' page.next_page_number request.GET.urlencode %}">Next</a>
+        <a href="{% customURL 'page' page.paginator.num_pages request.GET.urlencode %}">Last &raquo</a>
+    {% endif %}
 {% endblock content %}
