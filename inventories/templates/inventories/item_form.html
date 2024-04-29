@@ -1,16 +1,16 @@
-{% extends 'inventories/base.html' %}
-{% load django_bootstrap5 %}
-{% bootstrap_css %}
-{% bootstrap_javascript %}
+{% extends 'inventories/base.html' %}<!--extends the base template-->
+{% load django_bootstrap5 %}<!--Loads django bootstrap5 library-->
+{% bootstrap_css %}<!--Load bootstrap css-->
+{% bootstrap_javascript %}<!--Load boostrap javascript-->
 
-{% block content %}
+{% block content %}<!--This is where the content block begins-->
 
 <div>
-    <form method="POST" action="">
-        {% csrf_token %}
-        {{form.as_p}}
-        <input type="submit" value="Submit"/>
+    <form method="POST" action=""><!--Form uses a POST method to sent data-->
+        {% csrf_token %}<!--Token is always needewith POST for security -->
+        {{form.as_p}}<!--Displays the form which uses .as_p allowing to use a structure which flows down-->
+        <input type="submit" value="Submit"/><!--Submit button-->
     </form>
 </div>
 
-{% endblock content %}
+{% endblock content %}<!--Content block ends-->
