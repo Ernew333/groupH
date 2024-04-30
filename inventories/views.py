@@ -113,6 +113,6 @@ def sortItemsBy(items, sort):
     return items
 
 def getPage(request, items):
-    paginator = Paginator(items, 1)
+    paginator = Paginator(items, 20)
     requestedPageNumber = request.GET.get('page')
     return paginator.get_page(requestedPageNumber)
