@@ -52,13 +52,14 @@
             <div class="item-actions">
                 <label for="quantity">Quantity:</label> 
                 <input type="number" id="quantity" name="quantity" min="1" max="{{ item.quantity }}" value="1">
-                <button>Book Now</button>
+                <button>Add to Basket</button>
             </div>
         </div>
         <div class="separator"></div> 
         <div class="item-image">
             <img src="{{ item.image.url }}">
         </div>
+        <div class="separator"></div> 
         <div class="item-comments">
             <p>{{ item.comments }}</p>
         </div>
