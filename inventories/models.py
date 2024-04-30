@@ -22,7 +22,7 @@ class Item(models.Model):
         REPAIRING = "Repairing"
     status = models.CharField(max_length=13, choices=ItemStatus, default=ItemStatus.AVAILABLE) 
 
-    image = models.ImageField(upload_to='inventories/media/images')
+    image = models.ImageField(upload_to='inventories/media/images', default=None)
     comments = models.TextField(blank=True)
 
     def __str__(self):
