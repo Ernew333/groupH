@@ -38,16 +38,16 @@
         <tr><!--For loop used to iterate through item-->
             {%  for item in item %}
             <td>
-                {{item.name}}<!--Display the name of item-->
+                {{item.name|safe}}<!--Display the name of item-->
             </td>
             <td>
-                {{item.type}}<!--Display the type of item-->
+                {{item.type|safe}}<!--Display the type of item-->
             </td>
             <td>
-                {{item.location}}<!--Display the location of item-->
+                {{item.location|safe}}<!--Display the location of item-->
             </td>
             <td>
-                {{item.quantity}}<!--Display the number of item-->
+                {{item.quantity|safe}}<!--Display the number of item-->
             </td>
             <td>
                 <a href="{% url 'inventories:updateitem' item.id %}">Edit item</a><!--Link used to edit the item information-->
