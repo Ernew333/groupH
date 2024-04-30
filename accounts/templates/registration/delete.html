@@ -11,8 +11,8 @@
 
 <div>
     <form method="POST" action=""><!--Method is post as data needs to be sent when submit is pressed-->
-        {% csrf_token %}<!--Token is always needewith POST for security -->
-        <p>Delete <b>{{user.name}} ?</b></p><!--Asks if you want to delete with name of the item your trying to delete-->
+        {% csrf_token %}<!--Token is always needed with POST for security -->
+        <p>Delete <b>{{user.name}} ?</b></p><!--Asks if you are sure that you want to delete this user's account-->
         <input type="submit" value="Confirm"/><!--Submit button-->
     </form>
     <div>

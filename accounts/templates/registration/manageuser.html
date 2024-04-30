@@ -33,10 +33,10 @@
                 Phone
             </th>
         </tr>
-        <tr><!--For loop used to iterate through item-->
+        <tr><!--For loop-->
             {%  for user in users %}
             <td>
-                <a href="{% url 'registration:deleteuser' user.id %}">Delete User</a><!--Link used to delete an item-->
+                <a href="{% url 'registration:deleteuser' user.id %}">Delete User</a><!--Link used to delete a user's account-->
             </td>
             <td>
                 {% if user.is_superuser %}
@@ -56,9 +56,9 @@
             </td>
         </tr>
         {% endfor %}
-        <tr><!--For loop used to iterate through item-->
+        <tr>
             <td>
-                <a href="{% url 'registration:adduser' %}">Add User</a><!--Link used to delete an item-->
+                <a href="{% url 'registration:adduser' %}">Add User</a><!--Link used to add another user account-->
             </td>
             <td>
                 
@@ -73,7 +73,7 @@
                 
             </td>
         </tr>
-    </table><!--End of the for loop-->
+    </table><!--End of for loop-->
 
     {% endblock content %}<!--Content block ends-->
 </body>

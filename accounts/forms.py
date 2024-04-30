@@ -21,7 +21,7 @@ class UserForm(forms.ModelForm):
 
 USER_ROLES = (
     ('user', 'User'),   # Normal user
-    ('admin', 'Admin')  # Superuser / admin
+    ('admin', 'Admin')  # Superuser aka admin
 )
 
 class UserRoleForm(forms.Form):

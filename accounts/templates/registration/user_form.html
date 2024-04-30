@@ -8,9 +8,9 @@
     {% block content %}<!--This is where the content block begins-->
     
     <div>
-        <form method="POST" action=""><!--Form uses a POST method to sent data-->
-            {% csrf_token %}<!--Token is always needed with POST for security -->
-            {{form.as_p}}<!--Displays the form which uses .as_p allowing to use a structure which flows down-->
+        <form method="POST" action=""> <!--Form uses a POST method to sent data-->
+            {% csrf_token %} <!--Token is always needed with POST for security -->
+            {{form.as_p}} <!--Displays the form which uses .as_p allowing to use a structure which flows down-->
             <label for="role">Choose a role:</label>
             <select id="role" name="role">
                 <option value="user">User</option>
