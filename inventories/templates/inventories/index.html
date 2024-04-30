@@ -23,7 +23,7 @@
 
     {% for item in page %}
     <a href="{% url 'inventories:item' item.id %}">
-        <img src="{{ item.image }}"><br>
+        <img src="{{ item.image.url }}"><br>
         {{ item.name }}<br>
     </a>
     <button>Add to Basket</button>
