@@ -1,25 +1,8 @@
-
 {% extends "inventories/base.html" %}
-  {% block content %}   
-  
-  <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Generate Report</title>
+
+{% block content %}
     <style>
       /*styling to make the page more userfirendlys */
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            height: 100vh; 
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center; 
-        }
         .container {
             display: flex;
             flex-direction: column;
@@ -42,28 +25,23 @@
             background-color: #45a049;
         }
     </style>
-</head>
-<body>
-  <!--from setup to POST data back to the server to generete the report and redirect to a new page-->
-  <form method="POST" action="{% url 'inventories:report_results' %}"> 
-    <!--security token-->
-    {% csrf_token %}
-    <div class="container">
-        <h1>Generate Report</h1>
-        <!--drop down-->
-        <label for="reportType">Report Type:</label>
-        <select id="reportType" name="reportType">
-            <option value="inventory status">inventory status </option>
-            <option value="equipment usage">equipment booked </option>
-            <option value="overdue equipment">overdue equipment</option>
-            <option value="number of equipment">number of equipment</option>
-        </select>
-      
-      <!--button-->
-        <button type = "submit"  >GENERATE REPORT</button>
-    </div>
-<form>
-</body>
-</html>
-
+    <!--from setup to POST data back to the server to generete the report and redirect to a new page-->
+    <form method="POST" action="{% url 'inventories:report_results' %}"> 
+        <!--security token-->
+        {% csrf_token %}
+        <div class="container">
+            <h1>Generate Report</h1>
+            <!--drop down-->
+            <label for="reportType">Report Type:</label>
+            <select id="reportType" name="reportType">
+                <option value="inventory status">inventory status </option>
+                <option value="equipment usage">equipment booked </option>
+                <option value="overdue equipment">overdue equipment</option>
+                <option value="number of equipment">number of equipment</option>
+            </select>
+        
+        <!--button-->
+            <button type = "submit"  >GENERATE REPORT</button>
+        </div>
+    <form>
 {% endblock content %} 
