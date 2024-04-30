@@ -6,5 +6,6 @@ from . import views
 app_name = 'inventories'
 
 urlpatterns = [
-    path('', views.index, name="index")
+    path('', views.index, name="index"),
+    path('inventories/', views.bkconfirmed, name='bkconfirmed')
 ]
