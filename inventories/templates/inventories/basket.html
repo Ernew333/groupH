@@ -1,3 +1,4 @@
+<!--extends the base layout-->
 {% extends "inventories/base.html" %}
 {% block content %}
 <!DOCTYPE html>
@@ -6,15 +7,18 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Basket Page</title>
+<!--style for the page-->
 <style>
     body { font-family: Arial, sans-serif; margin: 40px; }
     table { width: 100%; border-collapse: collapse; }
     th, td { text-align: left; padding: 8px; border-bottom: 1px solid #ddd; }
     th { background-color: #f2f2f2; }
-    .remove-btn { background-color: #f44336; color: white; border: none; padding: 5px 10px; cursor: pointer; }
+    .removeButton { background-color: #f44336; color: white; border: none; padding: 5px 10px; cursor: pointer; }
+    .submitButton { background-color: #4CAF50; color: white; border: none; padding: 10px 20px; cursor: pointer; }
 </style>
 </head>
 <body>
+    <!--header for the page-->
 <h2>Your Basket</h2>
 <table>
     <thead>
@@ -26,10 +30,12 @@
         </tr>
     </thead>
     <tbody>
+        <!--lloop through booking in the bookings list to display them-->
         {% for booking in bookings %}
         <tr>
             
             <td>
+                <!--displays diffrent attributes of the booking -->
                 <img src="{{ booking.item.image.url }}" alt="Image of {{ booking.item.name }}" style= 'max-width: 40px'>
                 {{ booking.item.name }} -- {{ booking.item.id }}
             </td>
@@ -37,20 +43,24 @@
             <td>{{ booking.start_date }}</td>
             <td>{{ booking.end_date }}</td>
             <td>
-                
+                <!--from to delete booking-->
                 <form method="post" action="{% url 'inventories:basket' %}">
+                    <!--security toekem-->
                     {% csrf_token %}
                     <input type="hidden" name="delete" value="{{ booking.id }}">
-                    <button type="submit" class="remove-btn">Remove</button>
+                    <button type="submit" class="removeButton">Remove</button>
+                    
                 </form>
             </td>
         </tr>
+        
+
         {% endfor %}
     </tbody>
     
 </table>
-
-
+<!--button to comfrim booking and go the the booking comfirmation page-->
+<button type="submit" class="submitButton">comfim Booking</button>
     
     
 </body>

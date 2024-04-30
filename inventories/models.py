@@ -14,7 +14,7 @@ class Item(models.Model):
     quantity = models.IntegerField()
     audit = models.DateField(null=True, blank=False)
     location = models.CharField(max_length=50)
-    image = models.ImageField(upload_to= 'inventories/media/images')
+    image = models.ImageField(upload_to= 'inventories/media/images',blank=True, null=True)
     class ItemStatus(models.TextChoices):
         AVAILABLE = "Available"
         DECOMMISIONED = "Decommisioned"                
