@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from .models import Item
 from django.db.models import Q
 from django.core.paginator import Paginator
+from django.shortcuts import render, get_object_or_404
 
 # Create your views here.
 @login_required
@@ -116,3 +117,9 @@ def getPage(request, items):
     paginator = Paginator(items, 20)
     requestedPageNumber = request.GET.get('page')
     return paginator.get_page(requestedPageNumber)
+
+def item(request, item_id):
+    item = get_object_or_404(Item, id=item_id)
+    quantity_range = range(1, item.quantity + 1)  # Generating the range from 1 to item.quantity
+    context = {'item': item, 'quantity_range': quantity_range}
+    return render(request, 'inventories/item.html', context)

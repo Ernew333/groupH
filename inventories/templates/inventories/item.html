@@ -1,0 +1,38 @@
+{% extends 'inventories/base.html' %}
+
+{% block breadcrumbs %}
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">Home</li>
+        <li class="breadcrumb-item active">Item View</li>
+    </ol>
+{% endblock breadcrumbs %}
+
+{% block content %}    
+    <div class="row">
+        <div class="col">
+            <h1 class="text-end">{{ item.name }}</h1>            
+        </div>
+        <div class="col">           
+            <div class="row text-start my-auto">
+                <div>
+                    <label class="form-label" for="quantity">Quantity:</label>
+                </div>
+                <div class="col">
+                    <select class="form-select" id="quantity" name="quantity">
+                        {% for i in quantity_range %}
+                            <option value="{{ i }}">{{ i }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col">
+                    <button type="button" class="btn btn-primary">Add to Basket</button>                        
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="mx-auto p-2 text-center">
+        <img src="{{ item.image.url }}" style="max-width: 800px;">
+        <p>{{ item.comments }}</p>
+    </div>
+{% endblock content %}
