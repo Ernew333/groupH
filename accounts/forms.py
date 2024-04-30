@@ -5,19 +5,19 @@ from django import forms
 User = user_model()
 
 class UserRegistrationForm(UserCreationForm):
-    first_name = forms.CharField(max_length=100)
-    last_name = forms.CharField(max_length=100)
+    firstname = forms.CharField(max_length=30)
+    lastname = forms.CharField(max_length=30)
     email = forms.EmailField()
 
     class Meta:
         model = User
-        fields = ['first_name', 'last_name', 'email', 'password1', 'password2']
+        fields = ['firstname', 'lastname', 'email', 'password1', 'password2']
 
 
 class UserForm(forms.ModelForm):
     class Meta:
         model = User
-        fields = ['email', 'username', 'password', 'name', 'phone']
+        fields = ['email', 'username', 'password', 'firstname','lastname', 'phone']
 
 USER_ROLES = (
     ('user', 'User'),   # Normal user
