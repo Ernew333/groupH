@@ -5,6 +5,7 @@ from django.db.models import Q
 from django.core.paginator import Paginator
 from django.shortcuts import render, get_object_or_404
 from datetime import date # importing date
+from .forms import ItemForm
 
 @login_required
 def index(request):
@@ -148,16 +149,52 @@ def bkconfirmed(request):
     return render(request, 'inventories/bkconfirmed.html')
 
 def viewBooking(request):
-    completed_bookings = Booking.objects.filter(end_date__lt=date.today())#checks if booking is completed by checking if its past current date
-    for cb in completed_bookings:#for loop iterates completed_bookings
-        cb.status = "Completed"#status changed to completed and saves it
+    completed_bookings = Booking.objects.filter(end_date__lt=date.today()) # Checks if booking is completed by checking if its past current date
+    for cb in completed_bookings: # For loop iterates completed_bookings
+        cb.status = "Completed" # Status changed to completed and saves it
         cb.save()
-    booking = Booking.objects.all()#retrieve all bookings from database
-    return render(request, 'inventories/bookings.html',{'booking': booking })#booking page is rendered with all booking retrived from database
+    booking = Booking.objects.all() # Retrieve all bookings from database
+    return render(request, 'inventories/bookings.html',{'booking': booking }) # Booking page is rendered with all booking retrived from database
 
 def cancelBooking(request,id):
-    cancel_booking = Booking.objects.get(id=id)#retrieves id of booking your trying to cancel
-    cancel_booking.status = "Cancelled"#changes the status to cancelled and saves it 
+    cancel_booking = Booking.objects.get(id=id) # Retrieves id of booking your trying to cancel
+    cancel_booking.status = "Cancelled" # Changes the status to cancelled and saves it 
     cancel_booking.save()
-    return redirect('inventories:viewbooking')#redirects you back to view booking page
-    
+    return redirect('inventories:viewbooking') # Redirects you back to view booking page
+
+def manageItem(request):
+    item = Item.objects.all() # Retrieves all items from the database
+    context = {'item': item} # The items are passed onto the template  
+    return render(request,'inventories/manageitem.html', context) # Render the manage item page items retrieved from the database
+
+def createItem(request):
+    form = ItemForm()
+
+    if request.method == 'POST': # Checks if the method is post
+        form = ItemForm(request.POST) # The form instance stores the data from the POST
+        if form.is_valid():# Check if the form is valid and if it is the data will get saved to database
+            form.save()
+            return redirect('inventories:manageitem')# Redirects back to manage item page 
+    context = {'form': form} # Form passed into the template 
+    return render(request, 'inventories/item_form.html', context) # Renders the form page
+
+def updateItem(request,id):
+    item = Item.objects.get(id=id) # Retrieves item by its id
+    form = ItemForm(instance=item) # Instance of the form is created stored the item data
+
+    if request.method == 'POST': # Checks if the method is post
+        form = ItemForm(request.POST, instance=item) # The form instance stores the data from the POST
+        if form.is_valid(): # Check if the form is valid and if it is the data will get saved to database
+            form.save()
+            return redirect('inventories:manageitem')# Redirects back to manage item page 
+
+    context = {'form': form}
+    return render(request, 'inventories/item_form.html', context) # Renders the form page
+
+def deleteItem(request, id):
+    item = Item.objects.get(id=id) # Retrieves item by its id
+    context = {'item': item} # The items are passed onto the template 
+    if request.method == 'POST': # Checks if the method is post
+        item.delete() # Item will be deleted
+        return redirect('inventories:manageitem') # Redirects back to the manage item page 
+    return render(request, 'inventories/delete.html', {'item': item }) # Renders the delete page which asks if you really want to delete. 
