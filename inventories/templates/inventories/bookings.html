@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Booking</title>
+    {% extends 'inventories/base.html' %}<!--Extends the template in base-->
+
+    {% load static %}<!--Loads all the static files-->
+
+    {% load django_bootstrap5 %}<!--Loads django bootstrap -->
+    {% bootstrap_css %}<!--Loads bootstrap css-->
+    {% bootstrap_javascript %}<!--Loads bootstrap Javascript-->
+</head>
+<body>
+    {% block content %}<!--Where all content will start and be displayed on the page-->
+    <h1>Manage Bookings</h1>
+
+    <table class="table table-striped table-bordered"><!--Uses bootstap to style the table-->
+    <tr>
+        <th>
+        </th>
+        <th><!--All the table headers-->
+            Equipment
+        </th>
+        <th>
+            Status
+        </th>
+        <th>
+            User
+        </th>
+        <th>
+            Start Date
+        </th>
+        <th>
+            Due Date
+        </th>
+    </tr>
+    {% for booking in booking %}<!--For loop used to iterate through booking-->
+    <tr>
+        <td>{% if booking.status == "Active"%}<a href = "{% url 'inventories:cancelbooking' id=booking.id %}">Cancel</a>{% endif %}</td><!--Checks if booking status is Active so it can display cancel if it is-->
+        <td>{{booking.item}}</td><!--Displays the booking item-->
+        <td>{{booking.status}}</td><!--Displays the booking status-->
+        <td>{{booking.user}}</td><!--Displays the booking user-->
+        <td>{{booking.start_date}}</td><!--Displays the booking start date-->
+        <td>{{booking.end_date}}</td><!--Displays the booking end date-->
+    </tr>
+    {% endfor %}<!--For loop ends here-->
+    </table>
+    {% endblock content %}<!--content block stops-->
+</body>
+</html>

@@ -16,11 +16,12 @@ class Item(models.Model):
     location = models.CharField(max_length=50)
     
     class ItemStatus(models.TextChoices):
-        AVAILABLE = "Available"
-        DECOMMISIONED = "Decommisioned"                
-        ON_LOAN = "On Loan"
-        REPAIRING = "Repairing"
-    status = models.CharField(max_length=13, choices=ItemStatus, default=ItemStatus.AVAILABLE) 
+        AVAILABLE = "Available", "Available"
+        DECOMMISIONED = "Decommisioned", "Decommisioned"
+        ON_LOAN = "On Loan", "On Loan"
+        REPAIRING = "Repairing", "Repairing"
+
+    status = models.CharField(max_length=13, choices=ItemStatus.choices, default=ItemStatus.AVAILABLE) 
 
     image = models.ImageField(upload_to='inventories/media/images')
     comments = models.TextField(blank=True)
@@ -36,11 +37,12 @@ class Booking(models.Model):
     end_date = models.DateTimeField(auto_now=False, auto_now_add=False)
 
     class BookingStatus(models.TextChoices):
-        ACTIVE = "Active"
-        CANCELLED = "Cancelled"
-        COMPLETED = "Completed"
-        RESERVED = "Reserved"
-    status = models.CharField(max_length=9, choices=BookingStatus, default=BookingStatus.ACTIVE)
+        ACTIVE = "Active", "Active"
+        CANCELLED = "Cancelled", "Cancelled"
+        COMPLETED = "Completed", "Completed"
+        RESERVED = "Reserved", "Reserved"
+
+    status = models.CharField(max_length=9, choices=BookingStatus.choices, default=BookingStatus.ACTIVE)
 
     def __str__(self):
         return "Ref. {}".format(str(self.id))

@@ -13,7 +13,9 @@ urlpatterns = [
     path('item/<int:item_id>/', views.item, name='item'),
     path('reports/', views.reports, name="reports"),
     path('basket/', views.basket, name = "basket"),
-    path('confirmed/', views.bkconfirmed, name='confirmed')
+    path('confirmed/', views.bkconfirmed, name='confirmed'),
+    path('booking/', views.viewBooking, name = "viewbooking"), # View booking URL pattern
+    path('cancel_booking/<str:id>/', views.cancelBooking, name = "cancelbooking") # Cancel booking URL pattern    
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
