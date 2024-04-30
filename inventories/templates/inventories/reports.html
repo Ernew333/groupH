@@ -1,0 +1,47 @@
+{% extends "inventories/base.html" %}
+
+{% block content %}
+    <style>
+      /*styling to make the page more userfirendlys */
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        select, button {
+            margin: 10px;
+            padding: 8px 10px;
+            font-size: 16px;
+            width: 200px; 
+        }
+        button {
+            cursor: pointer;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+    <!--from setup to POST data back to the server to generete the report and redirect to a new page-->
+    <form method="POST" action="{% url 'inventories:report_results' %}"> 
+        <!--security token-->
+        {% csrf_token %}
+        <div class="container">
+            <h1>Generate Report</h1>
+            <!--drop down-->
+            <label for="reportType">Report Type:</label>
+            <select id="reportType" name="reportType">
+                <option value="inventory status">inventory status </option>
+                <option value="equipment usage">equipment booked </option>
+                <option value="overdue equipment">overdue equipment</option>
+                <option value="number of equipment">number of equipment</option>
+            </select>
+        
+        <!--button-->
+            <button type = "submit"  >GENERATE REPORT</button>
+        </div>
+    <form>
+{% endblock content %} 
