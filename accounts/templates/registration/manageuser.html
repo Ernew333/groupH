@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Users</title>
+    {% extends 'inventories/base.html' %}<!--Extends the base template-->
+
+    {% load static %}<!--Loads static files-->
+
+    {% load django_bootstrap5 %}<!--Loads django bootstrap5 library-->
+    {% bootstrap_css %}<!--Load bootstrap css-->
+    {% bootstrap_javascript %}<!--Load boostrap javascript-->
+</head>
+<body>
+    {% block content %}
+    <h1 style="text-align:center">Manage Users</h1>
+    <table class="table table-striped table-bordered"><!--Uses the boostrap stlying for the table-->
+        <tr><!--Table to display the contents with the headers below-->
+            <th>
+                Options
+            </th>
+            <th>
+                Account Type
+            </th>
+            <th>
+                Name
+            </th>
+            <th>
+                Email
+            </th>
+            <th>
+                Phone
+            </th>
+        </tr>
+        <tr><!--For loop used to iterate through item-->
+            {%  for user in users %}
+            <td>
+                <a href="{% url 'registration:deleteuser' user.id %}">Delete User</a><!--Link used to delete an item-->
+            </td>
+            <td>
+                {% if user.is_superuser %}
+                    Admin
+                {% else %}
+                    User
+                {% endif %}
+            </td>
+            <td>
+                {{user.name}}<!--Display the account name-->
+            </td>
+            <td>
+                {{user.email}}<!--Display the account email-->
+            </td>
+            <td>
+                {{user.phone}}<!--Display the account phone number-->
+            </td>
+        </tr>
+        {% endfor %}
+        <tr><!--For loop used to iterate through item-->
+            <td>
+                <a href="{% url 'registration:adduser' %}">Add User</a><!--Link used to delete an item-->
+            </td>
+            <td>
+                
+            </td>
+            <td>
+                
+            </td>
+            <td>
+                
+            </td>
+            <td>
+                
+            </td>
+        </tr>
+    </table><!--End of the for loop-->
+
+    {% endblock content %}<!--Content block ends-->
+</body>
+</html>

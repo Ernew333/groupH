@@ -12,3 +12,17 @@ class UserRegistrationForm(UserCreationForm):
     class Meta:
         model = User
         fields = ['first_name', 'last_name', 'email', 'password1', 'password2']
+
+
+class UserForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ['email', 'username', 'password', 'name', 'phone']
+
+USER_ROLES = (
+    ('user', 'User'),   # Normal user
+    ('admin', 'Admin')  # Superuser / admin
+)
+
+class UserRoleForm(forms.Form):
+    role = forms.ChoiceField(choices=USER_ROLES, required=True, label='Select your role')

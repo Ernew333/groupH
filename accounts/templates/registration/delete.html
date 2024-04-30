@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+{% extends 'inventories/base.html' %}<!--extends the base template-->
+{% load static %}
+
+{% load django_bootstrap5 %}<!--Loads django bootstrap5 library-->
+{% bootstrap_css %}<!--Load bootstrap css-->
+{% bootstrap_javascript %}<!--Load boostrap javascript-->
+
+{% block content %}<!--This is where the content block begins-->
+
+<div>
+    <form method="POST" action=""><!--Method is post as data needs to be sent when submit is pressed-->
+        {% csrf_token %}<!--Token is always needewith POST for security -->
+        <p>Delete <b>{{user.name}} ?</b></p><!--Asks if you want to delete with name of the item your trying to delete-->
+        <input type="submit" value="Confirm"/><!--Submit button-->
+    </form>
+    <div>
+        <small>
+            <a href="{% url 'registration:manageuser' %}">Cancel</a><!--Link to return back to the main page when they press cancel-->
+        </small>
+    </div>
+</div>
+
+{% endblock content %}<!--Content block ends-->
+
