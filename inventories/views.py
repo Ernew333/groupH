@@ -1,11 +1,12 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from .models import Item
+from .models import Booking
 from django.db.models import Q
 from django.core.paginator import Paginator
 from django.shortcuts import render, get_object_or_404
 
-# Create your views here.
+
 @login_required
 def index(request):
     items = Item.objects.all().order_by('name')
@@ -123,3 +124,23 @@ def item(request, item_id):
     quantity_range = range(1, item.quantity + 1)  # Generating the range from 1 to item.quantity
     context = {'item': item, 'quantity_range': quantity_range}
     return render(request, 'inventories/item.html', context)
+
+""" Author: w1939035-Ernesto Cosentino """
+def basket(request):
+    #get all bookings 
+    bookings = Booking.objects.all()
+    #if delete is triggered in the basket page witch is a button then get the pk of the booking 
+    if request.method == 'POST':
+        if 'delete' in request.POST:
+            pk = request.POST.get('delete')
+            #get the same id object from the database 
+            booking = Booking.objects.get(id=pk)
+            #delete it 
+            booking.delete()
+    #render the basket page
+    return render(request, 'inventories/basket.html', {"bookings": bookings})
+    
+""" Author: w1939035-Ernesto Cosentino """
+def reports(request):
+    #render the reports page 
+    return render(request, "inventories/reports.html")    

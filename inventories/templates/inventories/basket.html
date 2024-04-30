@@ -1,0 +1,62 @@
+<!-- Author: w1939035-Ernesto Cosentino -->
+
+<!--extends the base layout-->
+{% extends "inventories/base.html" %}
+
+{% block content %}
+    <!--style for the page-->
+    <style>
+        table { width: 100%; border-collapse: collapse; }
+        th, td { text-align: left; padding: 8px; border-bottom: 1px solid #ddd; }
+        th { background-color: #f2f2f2; }
+        .removeButton { background-color: #f44336; color: white; border: none; padding: 5px 10px; cursor: pointer; }
+        .submitButton { background-color: #4CAF50; color: white; border: none; padding: 10px 20px; cursor: pointer; }
+    </style>
+
+    <!--header for the page-->
+    <h2>Your Basket</h2>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Item</th>
+                <th>Quantity</th>
+                <th>start date </th>
+                <th>end date</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!--lloop through booking in the bookings list to display them-->
+            {% for booking in bookings %}
+            <tr>
+                
+                <td>
+                    <!--displays diffrent attributes of the booking -->
+                    <img src="{{ booking.item.image.url }}" alt="Image of {{ booking.item.name }}" style= 'max-width: 40px'>
+                    {{ booking.item.name }} -- {{ booking.item.id }}
+                </td>
+                <td>{{ booking.item.quantity }}</td>
+                <td>{{ booking.start_date }}</td>
+                <td>{{ booking.end_date }}</td>
+                <td>
+                    <!--from to delete booking-->
+                    <form method="post" action="{% url 'inventories:basket' %}">
+                        <!--security toekem-->
+                        {% csrf_token %}
+                        <input type="hidden" name="delete" value="{{ booking.id }}">
+                        <button type="submit" class="removeButton">Remove</button>
+                        
+                    </form>
+                </td>
+            </tr>
+            
+
+            {% endfor %}
+        </tbody>
+        
+    </table>
+    
+    <!--button to confirm booking and go the the booking comfirmation page-->
+    <button type="submit" class="submitButton">confirm Booking</button>
+{% endblock content %}
+
