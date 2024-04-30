@@ -1,95 +1,38 @@
 {% extends 'inventories/base.html' %}
 
-{% block content %}
-    <style>
-        .item-details {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
+{% block breadcrumbs %}
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">Home</li>
+        <li class="breadcrumb-item active">Item View</li>
+    </ol>
+{% endblock breadcrumbs %}
 
-        .item-header {
-            display: flex;
-            justify-content: space-between; 
-            align-items: center;
-            width: 100%;
-            margin-bottom: 20px; 
-        }
-        
-        .item-header h2 {
-            margin-left: 365px; 
-        }
-
-        .item-actions {
-            display: flex;
-            align-items: center;
-            margin-right: 425px;
-        }
-
-        .item-actions label {
-            margin-right: 3px; 
-        }
-
-        .item-actions button {
-            margin-left: 10px;
-        }
-
-        .item-comments p {
-            font-family: 'Roboto', sans-serif; 
-            color: #808080; 
-            font-weight: 550; 
-        }
-        .separator {
-            border-top: 1px solid #ccc; 
-            width: 100%;
-            margin-bottom: 10px; 
-        }
-        .button {
-            background-color: #808080; 
-            border: 2px solid #808080; 
-            border-radius: 11px;
-            color: #fff; 
-            font-size: 1rem;
-            font-weight: 600;
-            line-height: 33.4929px;
-            padding: 2px 8px; 
-            margin-left: 5px; 
-            cursor: pointer; 
-            transition: background-color 0.3s, border-color 0.3s, color 0.3s; /* Smooth transition on hover */
-        }
-
-
-        
-    </style>
-
-    <div class="item-details">
-        <div class="item-header">
-            <h2>{{ item.name }}</h2>
-            <div class="item-actions">
-                <label for="quantity">Quantity:</label> 
-                <select id="quantity" name="quantity">
-                    {% for i in quantity_range %}
-                        <option value="{{ i }}">{{ i }}</option>
-                    {% endfor %}
-                </select>                                
-            <div class="button">
-                Add to Basket
-            </div> 
+{% block content %}    
+    <div class="row">
+        <div class="col">
+            <h1 class="text-end">{{ item.name }}</h1>            
+        </div>
+        <div class="col">           
+            <div class="row text-start my-auto">
+                <div>
+                    <label class="form-label" for="quantity">Quantity:</label>
+                </div>
+                <div class="col">
+                    <select class="form-select" id="quantity" name="quantity">
+                        {% for i in quantity_range %}
+                            <option value="{{ i }}">{{ i }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col">
+                    <button type="button" class="btn btn-primary">Add to Basket</button>                        
+                </div>
             </div>
         </div>
-        <div class="separator"></div> 
-        <div class="item-image">
-            <img src="{{ item.image.url }}">
-        </div>
-        <div class="separator"></div> 
-        <div class="item-comments">
-            <p>{{ item.comments }}</p>
-        </div>
+    </div>
+
+    <div class="mx-auto p-2 text-center">
+        <img src="{{ item.image.url }}" style="max-width: 800px;">
+        <p>{{ item.comments }}</p>
     </div>
 {% endblock content %}
-
-<!-- HTML !-->
-<button class="button-45" role="button">Button 45</button>
-
-
-
