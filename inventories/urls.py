@@ -7,5 +7,5 @@ app_name = 'inventories'
 
 urlpatterns = [
     path('', views.index, name="index"),
-    path('inventories/', views.bkconfirmed, name='bkconfirmed')
+    path('confirmed/', views.bkconfirmed, name='bkconfirmed')
 ]
