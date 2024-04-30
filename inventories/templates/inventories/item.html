@@ -17,13 +17,13 @@
         }
         
         .item-header h2 {
-            margin-left: 310px; 
+            margin-left: 365px; 
         }
 
         .item-actions {
             display: flex;
             align-items: center;
-            margin-right: 460px;
+            margin-right: 425px;
         }
 
         .item-actions label {
@@ -44,6 +44,22 @@
             width: 100%;
             margin-bottom: 10px; 
         }
+        .button {
+            background-color: #808080; 
+            border: 2px solid #808080; 
+            border-radius: 11px;
+            color: #fff; 
+            font-size: 1rem;
+            font-weight: 600;
+            line-height: 33.4929px;
+            padding: 2px 8px; 
+            margin-left: 5px; 
+            cursor: pointer; 
+            transition: background-color 0.3s, border-color 0.3s, color 0.3s; /* Smooth transition on hover */
+        }
+
+
+        
     </style>
 
     <div class="item-details">
@@ -56,7 +72,9 @@
                         <option value="{{ i }}">{{ i }}</option>
                     {% endfor %}
                 </select>                                
-                <button>Add to Basket</button>
+            <div class="button">
+                Add to Basket
+            </div> 
             </div>
         </div>
         <div class="separator"></div> 
@@ -69,3 +87,9 @@
         </div>
     </div>
 {% endblock content %}
+
+<!-- HTML !-->
+<button class="button-45" role="button">Button 45</button>
+
+
+
