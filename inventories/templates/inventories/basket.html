@@ -57,6 +57,9 @@
     </table>
     
     <!--button to confirm booking and go the the booking comfirmation page-->
-    <button type="submit" class="submitButton">confirm Booking</button>
+    <form action="{% url 'inventories:confirmed' %}" method="POST">
+        {% csrf_token %}
+        <button type="submit" class="submitButton">confirm Booking</button>
+    </form>
 {% endblock content %}
 

@@ -12,7 +12,8 @@ urlpatterns = [
     path('accounts/', include('accounts.urls')),
     path('item/<int:item_id>/', views.item, name='item'),
     path('reports/', views.reports, name="reports"),
-    path('basket/', views.basket, name = "basket")    
+    path('basket/', views.basket, name = "basket"),
+    path('confirmed/', views.bkconfirmed, name='confirmed')
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

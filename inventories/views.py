@@ -143,4 +143,7 @@ def basket(request):
 """ Author: w1939035-Ernesto Cosentino """
 def reports(request):
     #render the reports page 
-    return render(request, "inventories/reports.html")    
+    return render(request, "inventories/reports.html")
+
+def bkconfirmed(request):
+    return render(request, 'inventories/bkconfirmed.html')
