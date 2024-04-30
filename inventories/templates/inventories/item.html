@@ -17,7 +17,7 @@
         }
         
         .item-header h2 {
-            margin-left: 330px; 
+            margin-left: 310px; 
         }
 
         .item-actions {
@@ -51,7 +51,11 @@
             <h2>{{ item.name }}</h2>
             <div class="item-actions">
                 <label for="quantity">Quantity:</label> 
-                <input type="number" id="quantity" name="quantity" min="1" max="{{ item.quantity }}" value="1">
+                <select id="quantity" name="quantity">
+                    {% for i in quantity_range %}
+                        <option value="{{ i }}">{{ i }}</option>
+                    {% endfor %}
+                </select>                                
                 <button>Add to Basket</button>
             </div>
         </div>

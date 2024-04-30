@@ -99,5 +99,6 @@ def getPage(request, items):
 
 def item(request, item_id):
     item = get_object_or_404(Item, id=item_id)
-    context = {'item': item}
+    quantity_range = range(1, item.quantity + 1)  # Generating the range from 1 to item.quantity
+    context = {'item': item, 'quantity_range': quantity_range}
     return render(request, 'inventories/item.html', context)
