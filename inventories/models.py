@@ -14,6 +14,7 @@ class Item(models.Model):
     quantity = models.IntegerField()
     audit = models.DateField(null=True, blank=False)
     location = models.CharField(max_length=50)
+    image = models.ImageField(upload_to='inventories/media/images', blank=True,null=True)
 
     class ItemStatus(models.TextChoices):
         AVAILABLE = "Available"
@@ -38,6 +39,7 @@ class Booking(models.Model):
         CANCELLED = "Cancelled"
         COMPLETED = "Completed"
         RESERVED = "Reserved"
+    
     status = models.CharField(max_length=9, choices=BookingStatus, default=BookingStatus.ACTIVE)
 
     def __str__(self):
