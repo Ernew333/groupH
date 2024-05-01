@@ -7,21 +7,28 @@
 <!--extends the base layout-->
 {% extends "inventories/base.html" %}
 
+{% block breadcrumbs %}
+    <ol class="breadcrumb" style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='%236c757d'/%3E%3C/svg%3E&#34;);">
+        <li class="breadcrumb-item"><a href="#" style="text-decoration: none;">Account</a></li>
+        <li class="breadcrumb-item active">Generate Reports</li>
+    </ol>
+{% endblock breadcrumbs %}
+
 {% block content %}
     <style>
       /*styling to make the page more userfirendlys */
-        .container {
+        #reportsPage {
             display: flex;
             flex-direction: column;
             align-items: center;
         }
-        select, button {
+        select, #generateReports {
             margin: 10px;
             padding: 8px 10px;
             font-size: 16px;
             width: 200px; 
         }
-        button {
+        #generateReports {
             cursor: pointer;
             background-color: #4CAF50;
             color: white;
@@ -36,7 +43,7 @@
     <form method="POST" action="{% url 'inventories:report_results' %}"> 
         <!--security token-->
         {% csrf_token %}
-        <div class="container">
+        <div id="reportsPage">
             <h1>Generate Report</h1>
             <!--drop down-->
             <label for="reportType">Report Type:</label>
@@ -48,7 +55,7 @@
             </select>
         
         <!--button-->
-            <button type = "submit"  >GENERATE REPORT</button>
+            <button id="generateReports" type = "submit"  >GENERATE REPORT</button>
         </div>
     <form>
 {% endblock content %} 

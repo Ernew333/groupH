@@ -56,11 +56,13 @@ class EditAccountView(LoginRequiredMixin, UpdateView):
 def index(request):
     return render(request, 'inventories/index.html')#renders the index page
 
+@login_required
 def manageuser(request):
     user = User.objects.all() #Retrieves all the users from the database
     context = {'users': user} #The users are passed onto the template  
     return render(request,'registration/manageuser.html', context) #Renders the manage user page thats been retrieved from the database
 
+@login_required
 def adduser(request):
     form = UserForm()
 
@@ -72,6 +74,7 @@ def adduser(request):
     context = {'form': form}
     return render(request, 'registration/user_form.html', context)
 
+@login_required
 def updateuser(request,id):
     user = User.objects.get(id=id)
     form = UserForm(instance=user)
@@ -85,6 +88,7 @@ def updateuser(request,id):
     context = {'form': form}
     return render(request, 'registration/user_form.html', context)
 
+@login_required
 def deleteuser(request, id):
     user = User.objects.get(id=id)
     context = {'user': user}

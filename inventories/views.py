@@ -132,6 +132,7 @@ def item(request, item_id):
     return render(request, 'inventories/item.html', context)
 
 """ Author: w1939035-Ernesto Cosentino """
+@login_required
 def basket(request,item_id):
     #get the items based on the id 
     item = Item.objects.get(id=item_id) 
@@ -139,11 +140,13 @@ def basket(request,item_id):
     return render(request, 'inventories/basket.html', {"item": item})
     
 """ Author: w1939035-Ernesto Cosentino """
+@login_required
 def reports(request):
     #render the reports page 
     return render(request, "inventories/reports.html")
 
 """ Author: w1939035-Ernesto Cosentino """
+@login_required
 def bkconfirmed(request, item_id):
     
     user = request.user
@@ -163,10 +166,13 @@ def bkconfirmed(request, item_id):
         end_date=end_date,
         status=Booking.BookingStatus.RESERVED  
     )
+    
+    context =  {'bookingRef': booking.id}
+
     # Render a confirmation page and pass the booking reference
-    return render(request, 'inventories/bkconfirmed.html', {'booking_ref': booking.id})
+    return render(request, 'inventories/bkconfirmed.html', context)
 
-
+@login_required
 def viewBooking(request):
     completed_bookings = Booking.objects.filter(end_date__lt=date.today()) # Checks if booking is completed by checking if its past current date
     for cb in completed_bookings: # For loop iterates completed_bookings
@@ -181,11 +187,13 @@ def cancelBooking(request,id):
     cancel_booking.save()
     return redirect('inventories:viewbooking') # Redirects you back to view booking page
 
+@login_required
 def manageItem(request):
     item = Item.objects.all() # Retrieves all items from the database
     context = {'item': item} # The items are passed onto the template  
     return render(request,'inventories/manageitem.html', context) # Render the manage item page items retrieved from the database
 
+@login_required
 def createItem(request):
     form = ItemForm()
 
@@ -197,6 +205,7 @@ def createItem(request):
     context = {'form': form} # Form passed into the template 
     return render(request, 'inventories/item_form.html', context) # Renders the form page
 
+@login_required
 def updateItem(request,id):
     item = Item.objects.get(id=id) # Retrieves item by its id
     form = ItemForm(instance=item) # Instance of the form is created stored the item data
@@ -210,6 +219,7 @@ def updateItem(request,id):
     context = {'form': form}
     return render(request, 'inventories/item_form.html', context) # Renders the form page
 
+@login_required
 def deleteItem(request, id):
     item = Item.objects.get(id=id) # Retrieves item by its id
     context = {'item': item} # The items are passed onto the template 
@@ -218,6 +228,7 @@ def deleteItem(request, id):
         return redirect('inventories:manageitem') # Redirects back to the manage item page 
     return render(request, 'inventories/delete.html', {'item': item }) # Renders the delete page which asks if you really want to delete.
 
+@login_required
 def report_results(request):
     if request.method == 'POST':
         reportType = request.POST.get('reportType')
@@ -241,5 +252,6 @@ def report_results(request):
         return render(request, "inventories/reports.html")
 
 """ Author: w1939035-Ernesto Cosentino """
+@login_required
 def reports(request):
     return render(request, "inventories/reports.html")
