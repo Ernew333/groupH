@@ -1,3 +1,8 @@
+#Edwin domale 
+# Azim Shahul Hameed
+#Ernesto Cosentino
+# Nayim Amdouni
+# Muhammad Ozair Khan
 from django.urls import path, include
 from . import views
 

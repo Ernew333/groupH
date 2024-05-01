@@ -1,3 +1,8 @@
+#Edwin domale 
+# Azim Shahul Hameed
+#Ernesto Cosentino
+# Nayim Amdouni
+# Muhammad Ozair Khan
 from django.db import models
 from django.contrib.auth.models import AbstractUser, BaseUserManager
 

@@ -1,3 +1,8 @@
+#Edwin domale 
+# Azim Shahul Hameed
+#Ernesto Cosentino
+# Nayim Amdouni
+# Muhammad Ozair Khan
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import get_user_model as user_model
 from django.contrib.auth.forms import PasswordChangeForm

@@ -1,5 +1,9 @@
 <!-- Author: w1939035-Ernesto Cosentino -->
-
+<!--Reviewed by: -->
+<!--Edwin domale-->
+<!--Azim Shahul Hameed-->
+<!--Nayim Amdouni-->
+<!--Muhammad Ozair Khan-->
 <!--extends the base layout-->
 {% extends "inventories/base.html" %}
 
@@ -9,57 +13,46 @@
         table { width: 100%; border-collapse: collapse; }
         th, td { text-align: left; padding: 8px; border-bottom: 1px solid #ddd; }
         th { background-color: #f2f2f2; }
+        .itemPic { max-width: 40px; vertical-align: middle; margin-right: 10px; }
         .removeButton { background-color: #f44336; color: white; border: none; padding: 5px 10px; cursor: pointer; }
-        .submitButton { background-color: #4CAF50; color: white; border: none; padding: 10px 20px; cursor: pointer; }
+        .submitButton { background-color: #4CAF50; color: white; border: none; padding: 5px 10px; cursor: pointer; }
     </style>
 
     <!--header for the page-->
     <h2>Your Basket</h2>
 
     <table>
-        <thead>
-            <tr>
-                <th>Item</th>
-                <th>Quantity</th>
-                <th>start date </th>
-                <th>end date</th>
-            </tr>
-        </thead>
-        <tbody>
-            <!--lloop through booking in the bookings list to display them-->
-            {% for booking in bookings %}
+        <tr>
+            <th>name</th>
+            <th>Item</th>
+            <th>Quantity</th>
+            
+        <tr>
             <tr>
                 
-                <td>
-                    <!--displays diffrent attributes of the booking -->
-                    <img src="{{ booking.item.image.url }}" alt="Image of {{ booking.item.name }}" style= 'max-width: 40px'>
-                    {{ booking.item.name }} -- {{ booking.item.id }}
-                </td>
-                <td>{{ booking.item.quantity }}</td>
-                <td>{{ booking.start_date }}</td>
-                <td>{{ booking.end_date }}</td>
-                <td>
-                    <!--from to delete booking-->
-                    <form method="post" action="{% url 'inventories:basket' %}">
-                        <!--security toekem-->
-                        {% csrf_token %}
-                        <input type="hidden" name="delete" value="{{ booking.id }}">
-                        <button type="submit" class="removeButton">Remove</button>
-                        
-                    </form>
-                </td>
+                
+                <!--displays diffrent attributes of the item -->
+                <td>{{item.name}}</td>
+                <td><img class= "itemPic"src="{{item.image.url }}" alt="Image of {{item.name }} " ></td>
+                
+                <td>{{ item.quantity }}</td>
+            
             </tr>
             
 
-            {% endfor %}
-        </tbody>
+        
         
     </table>
     
     <!--button to confirm booking and go the the booking comfirmation page-->
-    <form action="{% url 'inventories:confirmed' %}" method="POST">
+    <form action="{% url 'inventories:confirmed' item.id %}" method="POST">
         {% csrf_token %}
         <button type="submit" class="submitButton">confirm Booking</button>
+    </form>
+    <!--button to delete booking and go the the index  page-->
+    <form  action="{% url 'inventories:index'   %}" method="POST">
+        {% csrf_token %}
+        <button type="submit" class="removeButton">remove Booking</button>
     </form>
 {% endblock content %}
 

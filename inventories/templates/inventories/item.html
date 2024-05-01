@@ -1,3 +1,10 @@
+<!-- Author: Muhammad Ozair Khan -->
+<!--Reviewed by: -->
+<!--Edwin domale-->
+<!--Nayim Amdoun-->
+<!--Ernesto Cosentino-->
+<!--Azim Shahul Hameed -->
+<!--extends the base layout-->
 {% extends 'inventories/base.html' %}
 
 {% block breadcrumbs %}
@@ -10,9 +17,9 @@
 {% block content %}    
     <div class="row">
         <div class="col">
-            <h1 class="text-end">{{ item.name }}</h1>            
+            <h1 class="text-end">{{ item.name }}-- {{item.id}}</h1>            
         </div>
-        <div class="col">           
+        <div class="col">            
             <div class="row text-start my-auto">
                 <div>
                     <label class="form-label" for="quantity">Quantity:</label>
@@ -25,7 +32,7 @@
                     </select>
                 </div>
                 <div class="col">
-                    <a class="btn btn-primary" href="{% url 'inventories:basket' %}" role="button">Add to Basket</a>
+                    <a class="btn btn-primary" href="{% url 'inventories:basket' item.id %}" role="button">Add to Basket</a>
                 </div>
             </div>
         </div>

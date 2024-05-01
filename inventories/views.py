@@ -1,3 +1,8 @@
+#Edwin domale 
+# Azim Shahul Hameed
+#Ernesto Cosentino
+# Nayim Amdouni
+# Muhammad Ozair Khan
 from django.shortcuts import render , redirect
 from django.contrib.auth.decorators import login_required
 from .models import Item, Booking
@@ -5,6 +10,7 @@ from django.db.models import Q
 from django.core.paginator import Paginator
 from django.shortcuts import render, get_object_or_404
 from datetime import date # importing date
+from django.utils import timezone
 from .forms import ItemForm
 
 @login_required
@@ -126,27 +132,40 @@ def item(request, item_id):
     return render(request, 'inventories/item.html', context)
 
 """ Author: w1939035-Ernesto Cosentino """
-def basket(request):
-    #get all bookings 
-    bookings = Booking.objects.all()
-    #if delete is triggered in the basket page witch is a button then get the pk of the booking 
-    if request.method == 'POST':
-        if 'delete' in request.POST:
-            pk = request.POST.get('delete')
-            #get the same id object from the database 
-            booking = Booking.objects.get(id=pk)
-            #delete it 
-            booking.delete()
+def basket(request,item_id):
+    #get the items based on the id 
+    item = Item.objects.get(id=item_id) 
     #render the basket page
-    return render(request, 'inventories/basket.html', {"bookings": bookings})
+    return render(request, 'inventories/basket.html', {"item": item})
     
 """ Author: w1939035-Ernesto Cosentino """
 def reports(request):
     #render the reports page 
     return render(request, "inventories/reports.html")
 
-def bkconfirmed(request):
-    return render(request, 'inventories/bkconfirmed.html')
+""" Author: w1939035-Ernesto Cosentino """
+def bkconfirmed(request, item_id):
+    
+    user = request.user
+
+    # Get the item or  404 error if not 
+    item = get_object_or_404(Item, id=item_id)
+
+    # Set booking dates, to the time the booking has been made 
+    start_date = timezone.now()
+    end_date = start_date + timezone.timedelta(days=10)  #all bookings whould be returned within 10 days max
+
+    # Create the booking record
+    booking = Booking.objects.create(
+        item=item,
+        user=user,
+        start_date=start_date,
+        end_date=end_date,
+        status=Booking.BookingStatus.RESERVED  
+    )
+    # Render a confirmation page and pass the booking reference
+    return render(request, 'inventories/bkconfirmed.html', {'booking_ref': booking.id})
+
 
 def viewBooking(request):
     completed_bookings = Booking.objects.filter(end_date__lt=date.today()) # Checks if booking is completed by checking if its past current date
@@ -221,5 +240,6 @@ def report_results(request):
     else:
         return render(request, "inventories/reports.html")
 
+""" Author: w1939035-Ernesto Cosentino """
 def reports(request):
     return render(request, "inventories/reports.html")
