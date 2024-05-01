@@ -164,7 +164,7 @@ def bkconfirmed(request, item_id):
         user=user,
         start_date=start_date,
         end_date=end_date,
-        status=Booking.BookingStatus.RESERVED  
+        status=Booking.BookingStatus.ACTIVE 
     )
     
     context =  {'bookingRef': booking.id}
