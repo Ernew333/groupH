@@ -2,9 +2,14 @@
 {% load django_bootstrap5 %}
 
 {% block content %}
+    <h2 class="text-center">Login</h2>
+
     <form action="{% url 'accounts:login' %}" method="POST">
         {% csrf_token %}
         {% bootstrap_form form %}
         {% bootstrap_button button_type="submit" content="Log in" %}
+        <div class="form-footer my-2">
+            <p>Don't have an account? <a href="{% url 'accounts:register' %}">Sign Up</a></p>
+        </div>        
     </form>
 {% endblock content %}
