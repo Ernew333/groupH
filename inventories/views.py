@@ -15,15 +15,12 @@ from .forms import ItemForm
 
 @login_required
 def index(request):
-
-    searchQuery = request.GET.get('query')
+    search_query = request.GET.get('query')
 
     items = Item.objects.all().order_by('name')
-
-
-    if searchQuery:
-        items = items.filter(Q(name__icontains=searchQuery))
-
+    
+    if search_query:
+        items = items.filter(Q(name__icontains=search_query))
 
     types = getTypes(items)
     statuses = getStatuses(items)
@@ -33,8 +30,8 @@ def index(request):
     if not isFiltersEmpty(filters):
         items = applyFilter(items, filters)
 
-        itemsFilteredBySelectedType = Item.objects.filter(typein=filters.get('type'))
-        itemsFilteredBySelectedStatus = Item.objects.filter(statusin=filters.get('status'))
+        itemsFilteredBySelectedType = Item.objects.filter(type__in=filters.get('type'))
+        itemsFilteredBySelectedStatus = Item.objects.filter(status__in=filters.get('status'))
 
         if itemsFilteredBySelectedStatus:
             types = getTypes(itemsFilteredBySelectedStatus)
