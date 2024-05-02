@@ -59,7 +59,7 @@
                     <img src="{% static 'inventories/logo.png' %}" alt="Logo" style="height: 12vh;">
                 </a>
             </div>
-
+            {% if user.is_authenticated %}
             <div class="col-6">
                 <form action="{% url 'inventories:index' %}" method="GET">
                     <div class="input-group">
@@ -75,8 +75,7 @@
                 </form>
             </div>
 
-            <div class="col" style="text-align: right;">
-                {% if user.is_authenticated %}                    
+            <div class="col" style="text-align: right;">                  
                     <span class="dropdown">
                         <button class="btn btn-sm border-0" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                             <svg xmlns="http://www.w3.org/2000/svg" height="6vh" fill="currentColor" class="bi bi-person-circle mx-3" viewBox="0 0 16 16">
