@@ -12,7 +12,7 @@
 {% block content %}<!--This is where the content block begins-->
 
 <div>
-    <form method="POST" action=""><!--Form uses a POST method to sent data-->
+    <form method="POST" action="" enctype="multipart/form-data"><!--Form uses a POST method to sent data-->
         {% csrf_token %}<!--Token is always needewith POST for security -->
         {{form.as_p}}<!--Displays the form which uses .as_p allowing to use a structure which flows down-->
         <input type="submit" value="Submit"/><!--Submit button-->

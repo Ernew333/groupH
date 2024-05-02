@@ -174,12 +174,16 @@ def bkconfirmed(request, item_id):
 
 @login_required
 def viewBooking(request):
-    completed_bookings = Booking.objects.filter(end_date__lt=date.today()) # Checks if booking is completed by checking if its past current date
-    for cb in completed_bookings: # For loop iterates completed_bookings
-        cb.status = "Completed" # Status changed to completed and saves it
-        cb.save()
-    booking = Booking.objects.all() # Retrieve all bookings from database
-    return render(request, 'inventories/bookings.html',{'booking': booking }) # Booking page is rendered with all booking retrived from database
+    user = request.user  # Retrieve the logged-in user
+    if user.is_superuser:
+        completed_bookings = Booking.objects.filter(end_date__lt=date.today(), user=request.user)# Checks if booking is completed by checking if its past current date
+        booking = Booking.objects.all() # Retrieve all bookings from database
+        return render(request, 'inventories/bookings.html',{'booking': booking }) # Booking page is rendered with all booking retrived from database
+    else:
+        completed_bookings = Booking.objects.filter(user=user, end_date__lt=date.today())  # Filter completed bookings by the logged-in user and end date
+        booking = Booking.objects.filter(user=user)  # Filter bookings by the logged-in user
+        return render(request, 'inventories/bookings.html',{'booking': booking }) 
+
 
 def cancelBooking(request,id):
     cancel_booking = Booking.objects.get(id=id) # Retrieves id of booking your trying to cancel
@@ -198,7 +202,7 @@ def createItem(request):
     form = ItemForm()
 
     if request.method == 'POST': # Checks if the method is post
-        form = ItemForm(request.POST) # The form instance stores the data from the POST
+        form = ItemForm(request.POST, request.FILES) # The form instance stores the data from the POST
         if form.is_valid():# Check if the form is valid and if it is the data will get saved to database
             form.save()
             return redirect('inventories:manageitem')# Redirects back to manage item page 
@@ -211,7 +215,7 @@ def updateItem(request,id):
     form = ItemForm(instance=item) # Instance of the form is created stored the item data
 
     if request.method == 'POST': # Checks if the method is post
-        form = ItemForm(request.POST, instance=item) # The form instance stores the data from the POST
+        form = ItemForm(request.POST, request.FILES, instance=item) # The form instance stores the data from the POST
         if form.is_valid(): # Check if the form is valid and if it is the data will get saved to database
             form.save()
             return redirect('inventories:manageitem')# Redirects back to manage item page 
